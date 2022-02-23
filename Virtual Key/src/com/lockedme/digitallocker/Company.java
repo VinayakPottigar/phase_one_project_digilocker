@@ -8,6 +8,7 @@ public class Company {
 	private String intro;
 	private long assests;
 	private String websiteLink;
+	private long numberOfCustomers;
 	
 	private static Company company;
 
