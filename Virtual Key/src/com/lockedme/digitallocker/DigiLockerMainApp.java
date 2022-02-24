@@ -1,6 +1,7 @@
 package com.lockedme.digitallocker;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
@@ -84,6 +85,13 @@ public class DigiLockerMainApp {
 		System.out.println("3.Search a File");
 		System.out.println("4.Display files and Folders");
 		System.out.println("5.Delete an account");
+		System.out.println("6.My Profile");
+	}
+	
+	public void createRootDir() {
+			  String dir ="C:\\Root";
+		      File directory = new File(dir);
+		      System.out.println(directory.mkdir());
 	}
 	
 	/*public void updateMenu() {
@@ -97,13 +105,22 @@ public class DigiLockerMainApp {
 	}*/
 	
 	public static void main(String[] args) {
+		
+		File f;
+		String filename=null;
+		String finalpath=null;
+		String completePath=null;
+		String pathwithusername=null;
+		String rootdir=null;
+		String path=null;
 		Customer customer=null;
 		String firstName=null;
 		String middleName=null;
 		String lastName=null;
 		String dateOfBirth=null;
 		String gender=null;
-		int mobileNo=0;
+		//String skip=null;
+		long mobileNo=0;
 		String emailId=null;
 		String userName=null;
 		String password=null;
@@ -121,6 +138,7 @@ public class DigiLockerMainApp {
 		mainApp.applicationName();		
 		mainApp.printCompanyInfo(company);
 		mainApp.printDeveloperInfo();
+		mainApp.createRootDir();
 		
 		do {
 			System.out.println("-------------Main Menu----------------");
@@ -128,93 +146,131 @@ public class DigiLockerMainApp {
 			System.out.println("Enter Your Choice=");
 			ch=sc.nextByte();
 			switch(ch) {
-				case 1 : 	System.out.println("Enter Your FirstName");
-							firstName = sc.nextLine();
+				case 1 : 	
+							
+							System.out.println("\nEnter Your FirstName");
+							firstName = sc.next();
 							
 							System.out.println("Enter Your MiddleName");
-							middleName = sc.nextLine();
+							middleName = sc.next();
 							
 							System.out.println("Enter Your LastName");
-							lastName = sc.nextLine();
+							lastName = sc.next();
 							
 							System.out.println("Enter Your Date of Birth");
-							dateOfBirth = sc.nextLine();
+							dateOfBirth = sc.next();
 							
 							System.out.println("Enter Your Gender");
-							gender = sc.nextLine();
+							gender = sc.next();
+							
 							
 							System.out.println("Enter Your Mobile Number");
-							mobileNo = sc.nextInt();
+							mobileNo =sc.nextLong();
 							
 							System.out.println("Enter Your Email Id");
-							emailId = sc.nextLine();
+							emailId = sc.next();
 							
 							System.out.println("Enter Your UserName");
-							userName = sc.nextLine();
+							userName = sc.next();
 							
 							System.out.println("Enter Your Password");
-							password = sc.nextLine();
+							password = sc.next();
 							customer= customerOperations.signup(firstName, middleName, lastName, dateOfBirth, gender, mobileNo, emailId, userName, password);
 							
 					     
-				case 2 : 	System.out.println("Enter Your UserName");
-							userName = sc.nextLine();
+				case 2 : 	
+							System.out.println("\nYou can Login to the System with the username and Password");
+							System.out.println("Enter Your UserName");
+							userName = sc.next();
 							
 							System.out.println("Enter Your Password");
-							password = sc.nextLine();
+							password = sc.next();
 							customer= customerOperations.login(userName,password);
-							if(customer!=null) {
-								System.out.println("Login Successful\n"+"Welcome"+ customer.getFirstName() + " " + customer.getLastName());
-																
-								do {
-										mainApp.authorisedCustomerMenu();
-										System.out.println("Enter your Choice");
-										ch=sc.nextByte();
-										switch(ch){
-										case 1:
-											   break;
-											   
-										case 2: 
-												break;
-										case 3:
-												break;
-										case 4:
-												break;
-										case 5:// delete an account
+							
+							do {
+									if(customer!=null) {
+										System.out.println("\nLogin Successful\n"+"Welcome"+ customer.getFirstName() + " " + customer.getLastName());
+																		
+										
+												mainApp.authorisedCustomerMenu();
+												System.out.println("Enter your Choice( 1 to 6)");
+												ch=sc.nextByte();
 												
-											   break;
+												switch(ch){
+														case 1:	
+																try {
+																	System.out.println("Enter the file name to be created");
+															  		filename=sc.next();
+																	rootdir="C:\\root"+"\\"+customer.getUserName();
+																	f= new File(rootdir);
+																	System.out.println(f.mkdir());
+																	finalpath=rootdir+"\\";
+																	
+																	//pathwithusername=rootdir.concat(customer.getUserName())+"\\";
+																	//System.out.println(finalpath);
+																	pathwithusername=finalpath.concat(filename);
+																	//completePath= rootdir.concat(pathwithusername);
+																	
+																	f= new File(pathwithusername);
+																	if(f.createNewFile()) {
+																		System.out.println("New file Created successfully");
+																	}
+																}
+																catch(Exception e) {
+																		System.out.println("Exception"+e);
+																}			
+																
+																
+																break;
+															   
+														case 2: 
+																break;
+														case 3:
+																break;
+														case 4:
+																break;
+														case 5:// delete an account
+																
+															   break;
+														case 6:
+																customerOperations.seeProfile(customer);
+																break;
+														
+														default :
+																System.out.println("Please enter a valid choice");
+												
+											}
+											
+																			
 										
-										default :
-												System.out.println("Please enter a valid choice");
-										
+									}
+									else {
+										System.out.println("Please check your Username or Password");
 									}
 									
 									System.out.println("Do you want to continue y/n");
-									mainMenuChoice=sc.nextLine();
-									
-								}while(mainMenuChoice.toLowerCase().equals("y"));								
-								
-							}
-							else {
-								System.out.println("Please check your Username or Password");
-							}
-						break;				
+									mainMenuChoice=sc.next();
+							
+								}while(mainMenuChoice.toLowerCase().equals("y"));
+								break;				
 						
 				default:
 						System.out.println("Enter a valid choice");
 			
 			}
 			
-			System.out.println("Do you want to continue y/n");
-			mainMenuChoice=sc.nextLine();
+			customer=null;
+			System.out.println("Would you like to goTo main Menu ,Do you want to continue y/n");
+			mainMenuChoice=sc.next();
 			
 		}while(mainMenuChoice.toLowerCase().equals("y"));
+		sc.close();
 		
 		
 		
 		
 		
 
-	}
+	}// End of Main method
 
 }

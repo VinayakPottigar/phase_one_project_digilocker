@@ -1,7 +1,6 @@
 package com.lockedme.digitallocker;
 
-import java.util.HashSet;
-import java.util.Set;
+
 
 public class Customer {
 	private String firstName;
@@ -9,7 +8,7 @@ public class Customer {
 	private String lastName;
 	private String dateOfBirth;
 	private String gender;
-	private int mobileNo;
+	private long mobileNo;
 	private String emailId;
 	private String userName;
 	private String password;
@@ -20,7 +19,7 @@ public class Customer {
 	}
 	
 	public Customer(String firstName, String middleName, String lastName, String dateOfBirth, String gender,
-			int mobileNo, String emailId, String userName, String password) {
+			long mobileNo, String emailId, String userName, String password) {
 		totalNumberOfCustomers++;
 		this.firstName = firstName;
 		this.middleName = middleName;
@@ -74,7 +73,7 @@ public class Customer {
 		this.gender = gender;
 	}
 
-	public int getMobileNo() {
+	public long getMobileNo() {
 		return mobileNo;
 	}
 
