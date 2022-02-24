@@ -94,6 +94,16 @@ public class DigiLockerMainApp {
 		      System.out.println(directory.mkdir());
 	}
 	
+	public void display(String path) {
+		File directoryPath = new File(path);
+	      //List of all files and directories
+	      String contents[] = directoryPath.list();
+	      System.out.println("List of files and directories in the specified directory:");
+	      for(int i=0; i<contents.length; i++) {
+	         System.out.println(contents[i]);
+	      }
+	}
+	
 	/*public void updateMenu() {
 		System.out.println("Update Menu");
 		System.out.println("Enter your choince");
@@ -227,7 +237,8 @@ public class DigiLockerMainApp {
 																break;
 														case 3:
 																break;
-														case 4:
+														case 4: 
+															mainApp.display(rootdir);
 																break;
 														case 5:// delete an account
 																
