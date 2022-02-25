@@ -1,16 +1,26 @@
 package com.lockedme.digitallocker;
 
+import java.io.Console;
 import java.io.File;
 
 public class example {
 	public static void main(String args[]) {
-		try {
-				String dir ="C:\\sampledirectory";
-		      File directory = new File(dir);
-		      System.out.println(directory.mkdir());
-			} catch(Exception e) {
-			   e.printStackTrace();
+		         
+		Console cons;
+		if ((cons = System.console()) != null) {
+			char[] pass_ward = null;
+			try {
+				pass_ward = cons.readPassword("Input your Password:");
+				System.out.println("Your password was: " + new String(pass_ward));
+			} finally {
+				if (pass_ward != null) {
+					java.util.Arrays.fill(pass_ward, ' ');
+				}
 			}
+		} else {
+			throw new RuntimeException("Can't get password...No console");
+		}
 	}
-
 }
+
+

@@ -1,6 +1,6 @@
 package com.lockedme.digitallocker;
 
-
+import java.util.TreeSet;
 
 public class Customer {
 	private String firstName;
@@ -13,14 +13,30 @@ public class Customer {
 	private String userName;
 	private String password;
 	private static int totalNumberOfCustomers;
+	private TreeSet<String> numberOfFiles = new TreeSet<String>();
 	
+	
+	//This method returns the TreeSet obj which contains total number of Files of Customer.
+	public TreeSet<String> getNumberOfFiles() {
+		return numberOfFiles;
+	}
+	
+	//This method keeps track of Number of Files created by the Customer
+	public void setNumberOfFiles(String fileName) {
+		numberOfFiles.add(fileName);
+	}
+	
+	public void setMobileNo(long mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+
 	public Customer() {
 		
 	}
 	
 	public Customer(String firstName, String middleName, String lastName, String dateOfBirth, String gender,
 			long mobileNo, String emailId, String userName, String password) {
-		totalNumberOfCustomers++;
+		++totalNumberOfCustomers;
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;

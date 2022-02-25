@@ -4,7 +4,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DigiLockerMainApp {
 		
@@ -72,6 +84,7 @@ public class DigiLockerMainApp {
 		System.out.println("Please enter your Choice");
 		System.out.println("1.Sign up as a new Customer");
 		System.out.println("2.Login");
+		System.out.println("3.Exit");
 		//System.out.println("3.Update the profile");
 		//System.out.println("4.Delete an account");	
 		
@@ -84,8 +97,8 @@ public class DigiLockerMainApp {
 		System.out.println("2.Delete a File");
 		System.out.println("3.Search a File");
 		System.out.println("4.Display files and Folders");
-		System.out.println("5.Delete an account");
-		System.out.println("6.My Profile");
+		System.out.println("5.My Profile");
+		System.out.println("6.exit");
 	}
 	
 	public void createRootDir() {
@@ -94,16 +107,44 @@ public class DigiLockerMainApp {
 		      System.out.println(directory.mkdir());
 	}
 	
-	public void display(String path) {
-		File directoryPath = new File(path);
-	      //List of all files and directories
-	      String contents[] = directoryPath.list();
-	      System.out.println("List of files and directories in the specified directory:");
-	      for(int i=0; i<contents.length; i++) {
-	         System.out.println(contents[i]);
-	      }
-	}
 	
+	public boolean isValidMobileNumber(long s)
+	{
+		String number=Long.toString(s);
+        // The given argument to compile() method
+        // is regular expression. With the help of
+        // regular expression we can validate mobile
+        // number.
+        // The number should be of 10 digits.
+ 
+        // Creating a Pattern class object
+        Pattern p = Pattern.compile("^\\d{10}$");
+ 
+        // Pattern class contains matcher() method
+        // to find matching between given number
+        // and regular expression for which
+        // object of Matcher class is created
+        Matcher m = p.matcher(number);
+ 
+        // Returning boolean value
+        return (m.matches());
+    }
+	
+	
+	public  boolean isValidMailID(String email)
+    {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                            "[a-zA-Z0-9_+&*-]+)*@" +
+                            "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                            "A-Z]{2,7}$";
+                              
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
+    }
+	
+				
 	/*public void updateMenu() {
 		System.out.println("Update Menu");
 		System.out.println("Enter your choince");
@@ -115,8 +156,14 @@ public class DigiLockerMainApp {
 	}*/
 	
 	public static void main(String[] args) {
-		
+		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		formatter.setLenient(false);
+		String repeatpassword=null;
 		File f;
+		byte flag=0;
+		byte flag1=0;
+		byte i=0;
+		boolean underage=false;
 		String filename=null;
 		String finalpath=null;
 		String completePath=null;
@@ -153,133 +200,260 @@ public class DigiLockerMainApp {
 		do {
 			System.out.println("-------------Main Menu----------------");
 			mainApp.customerMenu();
-			System.out.println("Enter Your Choice=");
-			ch=sc.nextByte();
-			switch(ch) {
-				case 1 : 	
-							
-							System.out.println("\nEnter Your FirstName");
-							firstName = sc.next();
-							
-							System.out.println("Enter Your MiddleName");
-							middleName = sc.next();
-							
-							System.out.println("Enter Your LastName");
-							lastName = sc.next();
-							
-							System.out.println("Enter Your Date of Birth");
-							dateOfBirth = sc.next();
-							
-							System.out.println("Enter Your Gender");
-							gender = sc.next();
-							
-							
-							System.out.println("Enter Your Mobile Number");
-							mobileNo =sc.nextLong();
-							
-							System.out.println("Enter Your Email Id");
-							emailId = sc.next();
-							
-							System.out.println("Enter Your UserName");
-							userName = sc.next();
-							
-							System.out.println("Enter Your Password");
-							password = sc.next();
-							customer= customerOperations.signup(firstName, middleName, lastName, dateOfBirth, gender, mobileNo, emailId, userName, password);
-							
-					     
-				case 2 : 	
-							System.out.println("\nYou can Login to the System with the username and Password");
-							System.out.println("Enter Your UserName");
-							userName = sc.next();
-							
-							System.out.println("Enter Your Password");
-							password = sc.next();
-							customer= customerOperations.login(userName,password);
-							
-							do {
-									if(customer!=null) {
-										System.out.println("\nLogin Successful\n"+"Welcome"+ customer.getFirstName() + " " + customer.getLastName());
-																		
+			
+			try {
+					System.out.println("Enter Your Choice=");
+					ch=sc.nextByte();
+					switch(ch) {
+						case 1 : 	
+									do {
+											i=0;
+											System.out.println("\nEnter Your FirstName=");
+											firstName = sc.next();
+											if ( Character.isDigit(firstName.charAt(0)) )
+											{
+											    System.out.println("Name must not start with a digit");
+											    i=1;
+											}
+									}while(i==1);
 										
-												mainApp.authorisedCustomerMenu();
-												System.out.println("Enter your Choice( 1 to 6)");
-												ch=sc.nextByte();
+									do {
+										
+										i=0;
+										System.out.println("Enter Your MiddleName=");
+										middleName = sc.next();
+										if ( Character.isDigit(middleName.charAt(0)) )
+										{
+										    System.out.println("Name must not start with a digit");
+										    i=1;
+										}
+										
+									}while(i==1);
+									
+									do {
+										i=0;
+										
+										System.out.println("Enter Your LastName=");
+										lastName = sc.next();
+										if ( Character.isDigit(lastName.charAt(0)) )
+										{
+										    System.out.println("Name must not start with a digit");
+										    i=1;
+										}
+										
+									}while(i==1);
+										
+									
+									
+									do {
+									
+											try {
+												ch=9;
+												System.out.println("Enter Your Date of Birth in this format only \"dd/MM/yyyy\"=");
+												dateOfBirth = sc.next();
+												Date date= formatter.parse(dateOfBirth);
 												
-												switch(ch){
+												//Converting obtained Date object to LocalDate object
+											    Instant instant = date.toInstant();
+											    ZonedDateTime zone = instant.atZone(ZoneId.systemDefault());
+											    LocalDate givenDate = zone.toLocalDate();
+											    //Calculating the difference between given date to current date.
+											    Period period = Period.between(givenDate, LocalDate.now());
+											   // System.out.print("Hello "+name+" your current age is: ");
+											    if(period.getYears()<18) {
+											    	underage=true;
+											    	throw new UnderAgeException("Your age is bellow 18. You are not elligible to open an account");
+											    	
+											    }
+											}catch (ParseException e) {
+											    System.out.println("Enter the date in the specified Format");
+											    ch=0;
+											}
+											catch(UnderAgeException e) {
+												System.out.println(e);
+											}
+									}while(ch==0);
+										
+									
+									if(!underage)
+									{
+										System.out.println("Enter Your Gender=");
+										gender = sc.next();
+										
+										do {
+												i=0;	
+												System.out.println("Enter Your Mobile Number=");
+												mobileNo =sc.nextLong();
+												if(!mainApp.isValidMobileNumber(mobileNo)) {
+														i=1;
+														System.out.println("Enter a valide mobile number");
+												}
+												
+											
+										}while(i==1);
+										
+										do {
+											 i=0;
+											System.out.println("Enter Your Email Id=");
+											emailId = sc.next();
+											if(!mainApp.isValidMailID(emailId)) {
+												i=1;
+												System.out.println("Please enter a valid mail ID");
+											}
+											
+										}while(i==1);
+										
+										
+										
+										
+										do {
+												i=1;
+												System.out.println("Enter Your UserName=");
+												userName = sc.next();
+												
+												System.out.println("Enter Your Password=");
+												password = sc.next();
+												
+												System.out.println("Reenter Your Password=");
+												repeatpassword = sc.next();
+												if(password.equals(repeatpassword)) {
+													System.out.println("Please Recheck your password");
+													i=0;
+												}
+										}while(i==1);
+										
+										
+										
+										customer= customerOperations.signup(firstName, middleName, lastName, dateOfBirth, gender, mobileNo, emailId, userName, password);
+										flag1=1;
+									}
+									
+							     
+						case 2 : 	if(!underage)
+									{
+							
+										flag1=1;
+										System.out.println("\n*****You can Login to the System with the username and Password*****");
+										System.out.println("Enter Your UserName=");
+										userName = sc.next();
+										
+										System.out.println("Enter Your Password");
+										password = sc.next();
+										customer= customerOperations.login(userName,password);
+										flag=0;
+										
+										
+										do { 
+												
+											try {
+												if(customer!=null) {
+													System.out.println("\nLogin Successful\n"+"Welcome "+ customer.getFirstName() + " " + customer.getLastName());
+																								
+													mainApp.authorisedCustomerMenu();
+													System.out.println("Enter your Choice( 1 to 6)");
+													ch=sc.nextByte();
+																
+													switch(ch){
 														case 1:	
 																try {
-																	System.out.println("Enter the file name to be created");
-															  		filename=sc.next();
-																	rootdir="C:\\root"+"\\"+customer.getUserName();
-																	f= new File(rootdir);
-																	System.out.println(f.mkdir());
-																	finalpath=rootdir+"\\";
-																	
-																	//pathwithusername=rootdir.concat(customer.getUserName())+"\\";
-																	//System.out.println(finalpath);
-																	pathwithusername=finalpath.concat(filename);
-																	//completePath= rootdir.concat(pathwithusername);
-																	
-																	f= new File(pathwithusername);
-																	if(f.createNewFile()) {
-																		System.out.println("New file Created successfully");
-																	}
+																		customerOperations.addFile(customer);																	
 																}
 																catch(Exception e) {
 																		System.out.println("Exception"+e);
-																}			
-																
-																
+																}															
 																break;
-															   
-														case 2: 
+																			   
+														case 2: rootdir="C:\\root"+"\\"+customer.getUserName();
+																System.out.println("Enter the file name to be deleted=");
+																filename=sc.next();
+																customerOperations.deleteFile(rootdir, filename);									  				
+																  				
 																break;
-														case 3:
+																		
+														case 3:	System.out.println("Enter the file name to be Searched=");
+														  		filename=sc.next();
+																customerOperations.searchFile(customer,filename);
 																break;
-														case 4: 
-															mainApp.display(rootdir);
+																		
+														case 4: /*rootdir="C:\\root"+"\\"+customer.getUserName();
+																customerOperations.displayCustomerFiles(rootdir);*/
+																			
+																customerOperations.displayCustomerFiles(customer);
 																break;
-														case 5:// delete an account
-																
-															   break;
-														case 6:
+																		
+														case 5:
 																customerOperations.seeProfile(customer);
 																break;
-														
+																		
+														case 6 : 
+																System.out.println("Please enter a valid choice");
+																
 														default :
 																System.out.println("Please enter a valid choice");
-												
-											}
+																
+													}
+															
+																							
+														
+												}
+												else {
+													System.out.println("Please check your Username or Password");
+													flag=1;
+												}
+													
+												System.out.println("Do you want to continue y/n=");
+												mainMenuChoice=sc.next();
 											
-																			
+											}catch(Exception e) {
+												System.out.println("Enter only digit between given specified range");
+												System.out.println("Enter only digit between given specified range");
+												mainMenuChoice="y";
+												flag=0;
+												mainMenuChoice=sc.next();
+											}
 										
-									}
-									else {
-										System.out.println("Please check your Username or Password");
-									}
-									
-									System.out.println("Do you want to continue y/n");
-									mainMenuChoice=sc.next();
-							
-								}while(mainMenuChoice.toLowerCase().equals("y"));
-								break;				
-						
-				default:
-						System.out.println("Enter a valid choice");
-			
+										}while(mainMenuChoice.toLowerCase().equals("y")&& flag==0);
+									}//underage checking if condition ends here
+										break;
+										
+						case 3 :flag=1;
+								mainMenuChoice="y";
+								break;
+								
+						default:
+								System.out.println("Enter a valid choice");
+					 
+					}
+					
+					
 			}
+			catch(Exception e) {
+				System.out.println("Enter only digit between given specified range");
+				mainMenuChoice="y";
+				flag=0;
+				mainMenuChoice=sc.next();
+				
+			}
+					
+					if(flag==0) {
+						customer=null;
+						System.out.println("Would you like to goTo main Menu ,Do you want to continue y/n=");
+						mainMenuChoice=sc.next();
+						
+					}
 			
-			customer=null;
-			System.out.println("Would you like to goTo main Menu ,Do you want to continue y/n");
-			mainMenuChoice=sc.next();
 			
-		}while(mainMenuChoice.toLowerCase().equals("y"));
-		sc.close();
+			
+		}while(mainMenuChoice.toLowerCase().equals("y")&& flag==0);
 		
+		if(flag1==1) {
+			System.out.println("You have been successfully logged out, please revisit, bye");
+		}
+		else {
+			System.out.println("Please revisit, bye");
+		}
 		
-		
-		
+		sc.close();		
 		
 
 	}// End of Main method
