@@ -127,7 +127,7 @@ public class CustomerOperations implements CustomerHandling,FileOperations {
 		System.out.println("Total Number of files of (In Assemding Order) "+ customer.getFirstName()+ " "+ customer.getLastName()+"are="+ts.size());
 		int i=0;
 		for (var value : ts) {
-			System.out.println(i+")"+value);
+			System.out.println((++i)+")"+value);
 		}
           
 		

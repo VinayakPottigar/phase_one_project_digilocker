@@ -104,7 +104,7 @@ public class DigiLockerMainApp {
 	public void createRootDir() {
 			  String dir ="C:\\Root";
 		      File directory = new File(dir);
-		      System.out.println(directory.mkdir());
+		      directory.mkdir();
 	}
 	
 	
@@ -144,32 +144,32 @@ public class DigiLockerMainApp {
         return pat.matcher(email).matches();
     }
 	
-				
-	/*public void updateMenu() {
-		System.out.println("Update Menu");
-		System.out.println("Enter your choince");
-		System.out.println("1.Update lastname");
-		System.out.println("2.Update MobileNumber");
-		System.out.println("3.Update emailID");
-		System.out.println("4.Update Password");
-		
-	}*/
+	public boolean nameValidation( String firstName ) {
+	      return firstName.matches( "[A-Z][a-z]*" );
+	   }
 	
+	public boolean userNameValidation(String userName) {
+		return userName.matches("^[A-Za-z]\\w{5,29}$");
+	}
+	
+			
 	public static void main(String[] args) {
 		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		formatter.setLenient(false);
 		String repeatpassword=null;
-		File f;
+		String ch1=null;
+		//File f;
 		byte flag=0;
 		byte flag1=0;
 		byte i=0;
 		boolean underage=false;
+		boolean validationResult=false;
 		String filename=null;
-		String finalpath=null;
-		String completePath=null;
-		String pathwithusername=null;
+		//String finalpath=null;
+		//String completePath=null;
+		//String pathwithusername=null;
 		String rootdir=null;
-		String path=null;
+		//String path=null;
 		Customer customer=null;
 		String firstName=null;
 		String middleName=null;
@@ -207,41 +207,36 @@ public class DigiLockerMainApp {
 					switch(ch) {
 						case 1 : 	
 									do {
-											i=0;
 											System.out.println("\nEnter Your FirstName=");
 											firstName = sc.next();
-											if ( Character.isDigit(firstName.charAt(0)) )
-											{
-											    System.out.println("Name must not start with a digit");
-											    i=1;
+											validationResult=mainApp.nameValidation(firstName);
+											if(!validationResult) {
+												System.out.println("Please enter valid name with Firt Letter Capital");
 											}
-									}while(i==1);
+									}while(validationResult==false);
 										
 									do {
 										
-										i=0;
 										System.out.println("Enter Your MiddleName=");
 										middleName = sc.next();
-										if ( Character.isDigit(middleName.charAt(0)) )
-										{
-										    System.out.println("Name must not start with a digit");
-										    i=1;
-										}
+										validationResult=mainApp.nameValidation(middleName);
+										if(!validationResult) {
+											System.out.println("Please enter valid name with Firt Letter Capital");
+										}										
 										
-									}while(i==1);
+									}while(validationResult==false);
 									
 									do {
-										i=0;
-										
+																	
 										System.out.println("Enter Your LastName=");
 										lastName = sc.next();
-										if ( Character.isDigit(lastName.charAt(0)) )
-										{
-										    System.out.println("Name must not start with a digit");
-										    i=1;
+										validationResult=mainApp.nameValidation(lastName);
+										if(!validationResult) {
+											System.out.println("Please enter valid name with Firt Letter Capital");
 										}
 										
-									}while(i==1);
+										
+									}while(validationResult==false);
 										
 									
 									
@@ -277,8 +272,37 @@ public class DigiLockerMainApp {
 									
 									if(!underage)
 									{
-										System.out.println("Enter Your Gender=");
-										gender = sc.next();
+										
+										do {
+												i=0;
+												System.out.println("Select Your Gender=");
+												System.out.println("1. Male");
+												System.out.println("2. Female");
+												System.out.println("3. other");
+												
+												try {
+														System.out.println("Enter your choice=");
+														ch = sc.nextByte();
+														switch(ch){
+															case 1: gender="Male";
+																	break;
+															case 2: gender="Female";
+																	break;
+															case 3: gender="Other";
+																	break;
+															default: i=1;
+																	System.out.println("Enter a valid choice=");
+														}	
+												}
+												catch(Exception e) {
+													i=1;
+													System.out.println("Enter only digit between given specified range");
+													ch1=sc.next();
+												}
+																			
+										}while(i==1);
+										
+										
 										
 										do {
 												i=0;	
@@ -308,8 +332,25 @@ public class DigiLockerMainApp {
 										
 										do {
 												i=1;
-												System.out.println("Enter Your UserName=");
-												userName = sc.next();
+												
+												do {
+													System.out.println("User Name Selection Rules");
+													System.out.println("1.The username consists of 6 to 30 characters inclusive. If the username\r\n"
+															+ "consists of less than 6 or greater than 30 characters, then it is an invalid username.");
+													System.out.println("2.The username can only contain alphanumeric characters and underscores (_).");
+													System.out.println("3. Alphanumeric characters describe the character set consisting of lowercase characters [a – z]");
+													System.out.println("uppercase characters [A – Z], and digits [0 – 9].");
+													System.out.println("4. The first character of the username must be an alphabetic character, i.e., either lowercase character");
+													System.out.print(" [a – z] or uppercase character [A – Z].\n");
+													System.out.println("Enter Your UserName=");
+													userName = sc.next();
+													validationResult= mainApp.userNameValidation(userName);
+													if(!validationResult) {
+														System.out.println("Please enter the valid userName");
+													}
+													
+												}while(validationResult==false);
+												
 												
 												System.out.println("Enter Your Password=");
 												password = sc.next();
@@ -375,9 +416,7 @@ public class DigiLockerMainApp {
 																customerOperations.searchFile(customer,filename);
 																break;
 																		
-														case 4: /*rootdir="C:\\root"+"\\"+customer.getUserName();
-																customerOperations.displayCustomerFiles(rootdir);*/
-																			
+														case 4: 																			
 																customerOperations.displayCustomerFiles(customer);
 																break;
 																		
