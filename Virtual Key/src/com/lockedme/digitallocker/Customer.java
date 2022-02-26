@@ -127,13 +127,7 @@ public class Customer {
 
 	public static void setTotalNumberOfCustomers(int totalNumberOfCustomers) {
 		Customer.totalNumberOfCustomers = totalNumberOfCustomers;
-	}
-
-	
-	
-	
-	
-	
+	}	
 	
 
 }

@@ -8,7 +8,7 @@ import java.util.TreeSet;
 public class CustomerOperations implements CustomerHandling,FileOperations {
 	HashSet<Customer> setOfCustomers=new HashSet<Customer>();
 	Scanner sc = new Scanner(System.in);
-	TreeSet<String> ts= new TreeSet();
+	TreeSet<String> ts= new TreeSet<String>();
 	
 	public void insertCustomer(Customer customer) {
 		setOfCustomers.add(customer);

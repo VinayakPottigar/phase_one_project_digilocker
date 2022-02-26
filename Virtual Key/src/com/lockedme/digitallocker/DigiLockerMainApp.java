@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+//import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -79,7 +79,7 @@ public class DigiLockerMainApp {
 		System.out.println("************************************************************************************************* ");
 		
 	}
-	
+	//This method prints the Main Menu
 	public void customerMenu(){
 		System.out.println("Please enter your Choice");
 		System.out.println("1.Sign up as a new Customer");
@@ -89,7 +89,7 @@ public class DigiLockerMainApp {
 		//System.out.println("4.Delete an account");	
 		
 	}
-	
+	// This method prints the menu for the Authorised  Customer 
 	public void authorisedCustomerMenu() {
 		System.out.println("Internal Menu");
 		//System.out.println("1.Update the profile");
@@ -100,14 +100,14 @@ public class DigiLockerMainApp {
 		System.out.println("5.My Profile");
 		System.out.println("6.exit");
 	}
-	
+	//It create the default Root directory in which Customer Specific folders are created and files are maintained in it
 	public void createRootDir() {
 			  String dir ="C:\\Root";
 		      File directory = new File(dir);
 		      directory.mkdir();
 	}
 	
-	
+	// This method does the mobile number validation for 10 digit
 	public boolean isValidMobileNumber(long s)
 	{
 		String number=Long.toString(s);
@@ -130,7 +130,7 @@ public class DigiLockerMainApp {
         return (m.matches());
     }
 	
-	
+	//This method does the mail Id validation
 	public  boolean isValidMailID(String email)
     {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
@@ -144,10 +144,11 @@ public class DigiLockerMainApp {
         return pat.matcher(email).matches();
     }
 	
+	//This method validates the firstName, MiddleName and LastName of customer while SignUp process
 	public boolean nameValidation( String firstName ) {
 	      return firstName.matches( "[A-Z][a-z]*" );
 	   }
-	
+	//This method validates the Username selected by the Customer against the Username defalult rules.
 	public boolean userNameValidation(String userName) {
 		return userName.matches("^[A-Za-z]\\w{5,29}$");
 	}
@@ -207,7 +208,7 @@ public class DigiLockerMainApp {
 					switch(ch) {
 						case 1 : 	
 									do {
-											System.out.println("\nEnter Your FirstName=");
+											System.out.println("\nEnter Your FirstName[First alphabet Capital]=");
 											firstName = sc.next();
 											validationResult=mainApp.nameValidation(firstName);
 											if(!validationResult) {
@@ -217,7 +218,7 @@ public class DigiLockerMainApp {
 										
 									do {
 										
-										System.out.println("Enter Your MiddleName=");
+										System.out.println("Enter Your MiddleName[First alphabet Capital]=");
 										middleName = sc.next();
 										validationResult=mainApp.nameValidation(middleName);
 										if(!validationResult) {
@@ -228,7 +229,7 @@ public class DigiLockerMainApp {
 									
 									do {
 																	
-										System.out.println("Enter Your LastName=");
+										System.out.println("Enter Your LastName[First alphabet Capital]=");
 										lastName = sc.next();
 										validationResult=mainApp.nameValidation(lastName);
 										if(!validationResult) {
@@ -497,4 +498,4 @@ public class DigiLockerMainApp {
 
 	}// End of Main method
 
-}
+}//End of the Class DigiLockerMainApp.
