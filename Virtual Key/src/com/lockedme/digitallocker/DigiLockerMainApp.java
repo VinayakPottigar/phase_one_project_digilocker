@@ -159,25 +159,20 @@ public class DigiLockerMainApp {
 		formatter.setLenient(false);
 		String repeatpassword=null;
 		String ch1=null;
-		//File f;
 		byte flag=0;
 		byte flag1=0;
 		byte i=0;
 		boolean underage=false;
 		boolean validationResult=false;
 		String filename=null;
-		//String finalpath=null;
-		//String completePath=null;
-		//String pathwithusername=null;
 		String rootdir=null;
-		//String path=null;
 		Customer customer=null;
 		String firstName=null;
 		String middleName=null;
 		String lastName=null;
 		String dateOfBirth=null;
 		String gender=null;
-		//String skip=null;
+		
 		long mobileNo=0;
 		String emailId=null;
 		String userName=null;
